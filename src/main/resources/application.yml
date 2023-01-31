@@ -1,0 +1,14 @@
+app:
+  short-host: https://f200.co/
+micronaut:
+  server:
+    port: 8082
+  application:
+    name: urlshortner
+redis:
+  uri: redis-12545.c293.eu-central-1-1.ec2.cloud.redislabs.com:12545
+  password: a0ghKktOLx6cupw42q3UbGsHUbvWFr2c
+netty:
+  default:
+    allocator:
+      max-order: 3
