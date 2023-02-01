@@ -6,4 +6,5 @@ import io.micronaut.context.annotation.ConfigurationProperties
 class RedisConfig {
     var uri: String? = "localhost"
     var password: String? = null
+    var expiry: Long? = 0L
 }

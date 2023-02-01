@@ -14,7 +14,8 @@ class RedisRepository(
     fun put(key : String, value : String) {
         val redisConnection = getRedisConnection()
         val syncCommands = redisConnection.sync()
-        syncCommands[key] = value
+        // expire after 30 days when unused
+        syncCommands.setex(key, redisConfig.expiry ?: 0, value)
         redisConnection.close()
         LOG.info("RedisRepository.put[$key,$value]")
     }
@@ -23,6 +24,10 @@ class RedisRepository(
         val redisConnection = getRedisConnection()
         val syncCommands = redisConnection.sync()
         val value = syncCommands[key]
+        if (!value.isNullOrEmpty()) {
+            // renew for another 30 days if it is expanded
+            syncCommands.setex(key, redisConfig.expiry ?: 0, value)
+        }
         redisConnection.close()
         LOG.info("RedisRepository.get[$key]=$value")
         return value ?: ""
