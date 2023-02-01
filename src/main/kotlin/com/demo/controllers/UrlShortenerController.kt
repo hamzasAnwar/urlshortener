@@ -9,7 +9,11 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Post
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.slf4j.LoggerFactory
+
 
 @Controller("/url-shortener")
 class UrlShortenerController(
@@ -22,6 +26,13 @@ class UrlShortenerController(
         return "hello url-shortener world!"
     }
 
+    @Operation(summary = "Shortens url", description = "Returns 200 if successful")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Successfully shortened url!"),
+            ApiResponse(responseCode = "400", description = "Url param empty or invalid!"),
+        ]
+    )
     @Post(uri = "/shorten", produces = [MediaType.APPLICATION_JSON])
     fun shorten(@Body body: Map<String, String>) : HttpResponse<Any> {
         if (!body.containsKey("url") || body.get("url").isNullOrEmpty()) {
@@ -37,6 +48,14 @@ class UrlShortenerController(
         return HttpResponse.status<Any>(HttpStatus.OK).body(response)
     }
 
+    @Operation(summary = "Expands url", description = "Returns 200 if successful")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Successfully expanded url!"),
+            ApiResponse(responseCode = "400", description = "Url param empty!"),
+            ApiResponse(responseCode = "404", description = "Shortened url is not present!"),
+        ]
+    )
     @Post(uri = "/expand", produces = [MediaType.APPLICATION_JSON])
     fun expand(@Body body: Map<String, String>) : HttpResponse<Any> {
         if (!body.containsKey("url") || body.get("url").isNullOrEmpty()) {

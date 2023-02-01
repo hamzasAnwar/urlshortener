@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     kapt("io.micronaut:micronaut-http-validation")
+    kapt("io.micronaut.openapi:micronaut-openapi")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
@@ -27,8 +28,8 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     implementation("commons-validator:commons-validator:1.7")
-
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.swagger.core.v3:swagger-annotations")
 }
 
 
@@ -58,6 +59,12 @@ micronaut {
     processing {
         incremental(true)
         annotations("com.demo.*")
+    }
+}
+
+kapt {
+    arguments {
+        arg("micronaut.openapi.views.spec", "swagger-ui.enabled=true")
     }
 }
 

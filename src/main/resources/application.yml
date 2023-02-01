@@ -5,6 +5,14 @@ micronaut:
     port: 8082
   application:
     name: urlshortner
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
 redis:
   uri: redis-12545.c293.eu-central-1-1.ec2.cloud.redislabs.com:12545
   password: a0ghKktOLx6cupw42q3UbGsHUbvWFr2c
