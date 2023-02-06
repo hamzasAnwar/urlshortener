@@ -40,7 +40,7 @@ class UrlShortenerController(
             return HttpResponse.status<Any>(HttpStatus.BAD_REQUEST).body("`url` is mandatory!")
         }
         val url = body.getValue("url")
-        if (!url.isValidUrl()) {
+        if (!isValidUrl(url)) {
             LOG.warn("UrlShortenerController.shorten: `$url` is not a valid url!")
             return HttpResponse.status<Any>(HttpStatus.BAD_REQUEST).body("`$url` is not a valid url!")
         }

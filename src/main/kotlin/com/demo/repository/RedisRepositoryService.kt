@@ -7,7 +7,7 @@ import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 
 @Singleton
-class RedisRepository(
+class RedisRepositoryService(
     var redisConfig: RedisConfig
 ) {
 
@@ -39,6 +39,6 @@ class RedisRepository(
     }
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(RedisRepository::class.java)
+        private val LOG = LoggerFactory.getLogger(RedisRepositoryService::class.java)
     }
 }
